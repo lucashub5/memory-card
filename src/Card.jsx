@@ -6,8 +6,8 @@ function Card({ champ, onClick }) {
 
     return (          
     <li className="card" onClick={onClick}>
-        <div className='img-card' key={champ.id}>
-            <img src={loadingImageURL} alt="Imagen 1" />
+        <div className='img-card'>
+            <img src={loadingImageURL} alt="Imagen 1" key={champ.id}/>
             <div className="gradient-overlay"></div>
         </div>
         <p className='card-text'>{champ.name}</p>
