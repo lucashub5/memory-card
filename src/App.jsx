@@ -1,6 +1,6 @@
 import './App.css';
 import Card from './Card';
-import randomCards from './randomCards';
+import { randomCards } from './randomCards.js';
 import PreLoad from './PreLoad';
 import { useState } from 'react';
 
