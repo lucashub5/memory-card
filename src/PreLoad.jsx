@@ -21,7 +21,7 @@ function PreLoad({ onSubmit }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <section className='game-preload'>
+            <section className='box-main'>
                 <p>Enter your name and select an icon:</p>
                 <input type="text" placeholder="Your name..." value={name} onChange={handleNameChange} required />
                     <ul className='icons-list'>
@@ -32,7 +32,7 @@ function PreLoad({ onSubmit }) {
                             </li>
                         ))}
                     </ul>
-                <button className='btn-start' type="submit">Start!</button>
+                <button className='btn' type="submit">Start!</button>
             </section>
         </form>)
 }

@@ -146,7 +146,7 @@ footer {
   color: black;
 }
 
-.game-preload {
+.box-main {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -197,13 +197,21 @@ footer {
   box-shadow: 0px 0px 2px 4px rgb(10, 200, 185);
 }
 
-.btn-start {
+.btn {
   width: 100px;
   height: 22px;
   border: 1px solid rgb(200, 155, 60);
   background: linear-gradient(to bottom, rgb(10, 50, 60), rgb(0, 90, 130));
   color: white;
   font-weight: 700;
+}
+
+.btn:hover {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.btn:active {
+  background: linear-gradient(to bottom, rgb(0, 90, 130), rgb(10, 50, 60));
 }
 
 input {
@@ -238,7 +246,7 @@ form {
   height: 100%;
 }
 
-.game-preload {
+.box-main {
   height: 100%;
   width: 100%;
   justify-content: start;

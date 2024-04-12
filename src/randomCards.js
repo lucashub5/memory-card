@@ -1,5 +1,6 @@
 import { dataChampions } from "./data";
 
+//función para mezclar un array de forma aleatoria
 function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
@@ -8,28 +9,47 @@ function shuffle(arr) {
     return arr;
 }
 
+function randomArr(arr) {
+  return Math.floor(Math.random() * arr.length);
+}
+
 function randomCards(alreadySelected = []) {
-    const dataChampionsCopy = [...dataChampions];
-    const alreadySelectedCopy = [...alreadySelected];
+    const cloneAlreadySelected = [...alreadySelected];
     const alreadyAdded = new Set();
     const cardsArr = [];
 
-    if (alreadySelectedCopy.length > 0) {
-      const randomIndex = Math.floor(Math.random() * alreadySelectedCopy.length);
-      const pushCard = alreadySelectedCopy[randomIndex];
-      cardsArr.push(pushCard);
-      alreadyAdded.add(pushCard);
+    //se asegura de introducir una carta a la baraja que el usuario no haya tocado.
+    const filteredData = dataChampions.filter(champion => !cloneAlreadySelected.some(selected => selected === champion));
+    const randomCard = randomArr(filteredData);
+    const pushCard = filteredData[randomCard];
+    cardsArr.push(pushCard);
+    alreadyAdded.add(pushCard);
+
+    //se agregan entre 1 a 4 cartas en la baraja que ya se hayan tocado.
+    const randomNum = Math.floor(Math.random() * 4) + 1;
+
+    for (let i = 0; i < randomNum; i++) {
+      if (cloneAlreadySelected.length > 0) {
+        const pushCard = cloneAlreadySelected[randomArr(cloneAlreadySelected)];
+        cardsArr.push(pushCard);
+        alreadyAdded.add(pushCard);
+        const indexToRemove = cloneAlreadySelected.indexOf(pushCard);
+        cloneAlreadySelected.splice(indexToRemove, 1);
+      }
     }
     
-    while (cardsArr.length < 5 && alreadyAdded.size < dataChampionsCopy.length) {
-        const randomCard = Math.floor(Math.random() * dataChampionsCopy.length);
+    //se agregan las cartas faltantes a la baraja
+    while (cardsArr.length < 5 && alreadyAdded.size < dataChampions.length) {
+        const randomCard = randomArr(dataChampions);
+        const pushCard = dataChampions[randomCard];
     
-        if (!alreadyAdded.has(randomCard)) {
-          alreadyAdded.add(randomCard);
-          cardsArr.push({id: randomCard, name: dataChampionsCopy[randomCard]});
+        if (!alreadyAdded.has(pushCard)) {
+          alreadyAdded.add(pushCard);
+          cardsArr.push(pushCard);
         }
     }
 
+    //se llama a funcion para mezclar la baraja
     return shuffle(cardsArr);
 }
 

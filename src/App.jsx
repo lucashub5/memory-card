@@ -2,8 +2,8 @@ import './App.css';
 import Card from './Card';
 import { randomCards } from './randomCards.js';
 import PreLoad from './PreLoad';
+import Lost from './Lost';
 import { useState } from 'react';
-
 
 function App() {
   const [cards, setCards] = useState(() => randomCards());
@@ -11,27 +11,34 @@ function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [preLoad, setPreLoad] = useState(false);
+  const [lost, setLost] = useState(false);
   const [userData, setUserData] = useState(null);
 
 
-  function handleClick(champID, champName) {
-    if (selectedCards.some(card => card.id === champID)) {
+  function handleClick(champ) {
+    if (selectedCards.some(card => card === champ)) {
       setScore(0);
       setSelectedCards([]);
       setCards(randomCards());
+      setLost(true);
     } else {
       if(score >= bestScore) {
         setBestScore(score + 1);
       }
       setScore(score + 1);
-      setSelectedCards([...selectedCards, {id: champID, name: champName}]);
-      setCards(randomCards([...selectedCards, {id: champID, name: champName}]));
+      setSelectedCards([...selectedCards, champ]);
+      setCards(randomCards([...selectedCards, champ]));
     }
   }
 
   function handleStart(name, icon) {
     setUserData({ name, icon });
     setPreLoad(true);
+  }
+
+  function handleClickRestart() {
+    console.log('ok');
+    setLost(false);
   }
 
   return (
@@ -56,13 +63,19 @@ function App() {
       <main>
         {preLoad ? (
           <ul className='game-container'>
-            {cards.map((champ, index) => (
-              <Card 
-                key={index}
-                champ={champ}
-                onClick={() => handleClick(champ.id, champ.name)}
+            {lost ? (
+              <Lost 
+              onClick={handleClickRestart}
               />
-            ))}
+            ) : (
+              cards.map((champ, index) => (
+                <Card 
+                  key={index}
+                  champ={champ}
+                  onClick={() => handleClick(champ)}
+                />
+              ))
+            )}
           </ul>
         ) : (
           <PreLoad 
